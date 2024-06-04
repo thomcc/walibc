@@ -18,6 +18,6 @@ That said, making most functions inline goes part of the way towards addressing 
 - Supporting non-Rust use, for now.
 
 ## License
-Public domain, as explained by [the Unlicense](./UNLICENSE). Failing that, the typical Rusty combo of Apache-2.0 or MIT is available.
+Public domain, as explained by [the Unlicense](./UNLICENSE). Failing that, the typical Rusty combo of [Apache-2.0](./LICENSE-APACHE) or [MIT](./LICENSE-MIT) is available.
 
 Portions of `walibc` were ported from [pdclib](https://github.com/DevSolar/pdclib), which is also public domain.
