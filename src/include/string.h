@@ -202,9 +202,34 @@ static inline size_t strxfrm(char * __WALIBC_RESTRICT __s1, char const *__WALIBC
     return __len;
 }
 
+static inline size_t strspn(char const *__s1, char const *__s2) {
+    // TODO bitset
+    size_t __n = 0;
+    while (__s1[__n]) {
+        char const *__p = __s2;
+        while (*__p) {
+            if (__s1[__n] == *__p) break;
+            ++__p;
+        }
+        if (!*__p) return __n;
+        ++__n;
+    }
+    return __n;
+}
+
+static inline size_t strcspn(char const *__s1, char const *__s2) {
+    // TODO bitset
+    size_t __n = 0;
+    while (__s1[__n]) {
+        for (char const *__p = __s2; *__p;)
+            if (__s1[__n] == *__p++) return __n;
+        ++__n;
+    }
+    return __n;
+}
+
 /*
 strpbrk
-strspn
 strerror
 */
 __WALIBC_END_EXTERN;
