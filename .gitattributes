@@ -1,0 +1,2 @@
+/src/include/*.h linguist-language=C
+/src/include/* linguist-language=C++
