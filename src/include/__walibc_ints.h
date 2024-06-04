@@ -171,4 +171,7 @@ typedef ptrdiff_t ssize_t;
 # define offsetof(type, field) __builtin_offsetof(type, field)
 #endif
 
+typedef size_t rsize_t;
+#define RSIZE_MAX (SIZE_MAX >> 1)
+
 __WALIBC_END_EXTERN;
