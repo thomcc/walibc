@@ -20,4 +20,6 @@ That said, making most functions inline goes part of the way towards addressing 
 ## License
 Public domain, as explained by [the Unlicense](./UNLICENSE). Failing that, the typical Rusty combo of [Apache-2.0](./LICENSE-APACHE) or [MIT](./LICENSE-MIT) is available.
 
-Portions of `walibc` were ported from [pdclib](https://github.com/DevSolar/pdclib), which is also public domain.
+Additionally:
+- Portions of `walibc` were ported from [pdclib](https://github.com/DevSolar/pdclib), which is also public domain.
+- The implementation of the `vsnprintf`-family of functions is taken from [`stb_sprintf`](https://github.com/nothings/stb/blob/013ac3beddff3dbffafd5177e7972067cd2b5083/stb_sprintf.h) (with some modifications). This is also public domain.
