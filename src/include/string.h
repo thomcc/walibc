@@ -195,9 +195,14 @@ static inline char *strtok(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RE
     return strtok_s(__s1, &__state.__max, __s2, &__state.__tmp);
 }
 
-/*
+static inline size_t strxfrm(char * __WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2, size_t __n) {
+    // basically just strncpy without zeroing the tail.
+    size_t __len = strlen(__s2);
+    if (__len < __n) while (__n-- && (*__s1++ = (unsigned char)*__s2++));
+    return __len;
+}
 
-strxfrm
+/*
 strpbrk
 strspn
 strerror
