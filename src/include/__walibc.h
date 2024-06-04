@@ -6,12 +6,12 @@
 #endif
 
 #ifdef __cplusplus
-# define __WALIBC_BEGIN_EXTERN extern "C" { struct __walibc_force_semicolon
-# define __WALIBC_END_EXTERN } struct __walibc_force_semicolon
+# define __WALIBC_BEGIN_EXTERN extern "C" { _Static_assert(1, "force semicolon")
+# define __WALIBC_END_EXTERN } _Static_assert(1, "force semicolon")
 # define __WALIBC_RESTRICT
 #else
-# define __WALIBC_BEGIN_EXTERN struct __walibc_force_semicolon
-# define __WALIBC_END_EXTERN struct __walibc_force_semicolon
+# define __WALIBC_BEGIN_EXTERN _Static_assert(1, "force semicolon")
+# define __WALIBC_END_EXTERN _Static_assert(1, "force semicolon")
 # define __WALIBC_RESTRICT restrict
 #endif
 
