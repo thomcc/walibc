@@ -110,10 +110,23 @@ static inline char *strncat(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_R
     return __ret;
 }
 
+static inline char *strchr(const char *__s, int __c) {
+    do if (*__s == (char)__c) return (char *)__s;
+    while (*__s++);
+    return 0;
+}
+
+static inline char *strrchr(const char *__s, int __c) {
+    size_t __i = 0;
+    while (__s[__i++]);
+    do if (__s[--__i] == (char)__c) return ((char *)__s) + __i;
+    while (__i);
+    return 0;
+}
+
 /*
 
 strxfrm
-strchr
 strpbrk
 strspn
 strstr
