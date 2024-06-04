@@ -230,7 +230,7 @@ STBSP__PUBLICDEC void STB_SPRINTF_DECORATE(set_separators)(char comma, char peri
 #define stbsp__uint16 unsigned short
 
 #ifndef stbsp__uintptr
-#if defined(__ppc64__) || defined(__powerpc64__) || defined(__aarch64__) || defined(_M_X64) || defined(__x86_64__) || defined(__x86_64) || defined(__s390x__)
+#if defined(__ppc64__) || defined(__powerpc64__) || defined(__aarch64__) || defined(_M_X64) || defined(__x86_64__) || defined(__x86_64) || defined(__s390x__) || defined(_LP64)
 #define stbsp__uintptr stbsp__uint64
 #else
 #define stbsp__uintptr stbsp__uint32
@@ -541,12 +541,12 @@ STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintfcb)(STBSP_SPRINTFCB *callback,
          break;
       // are we 64-bit on intmax? (c99)
       case 'j':
-         fl |= (sizeof(size_t) == 8) ? STBSP__INTMAX : 0;
+         fl |= (sizeof(intmax_t) == 8) ? STBSP__INTMAX : 0;
          ++f;
          break;
       // are we 64-bit on size_t or ptrdiff_t? (c99)
       case 'z':
-         fl |= (sizeof(ptrdiff_t) == 8) ? STBSP__INTMAX : 0;
+         fl |= (sizeof(size_t) == 8) ? STBSP__INTMAX : 0;
          ++f;
          break;
       case 't':
