@@ -110,17 +110,29 @@ static inline char *strncat(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_R
     return __ret;
 }
 
-static inline char *strchr(const char *__s, int __c) {
+static inline char *strchr(char const *__s, int __c) {
     do if (*__s == (char)__c) return (char *)__s;
     while (*__s++);
     return 0;
 }
 
-static inline char *strrchr(const char *__s, int __c) {
+static inline char *strrchr(char const *__s, int __c) {
     size_t __i = 0;
     while (__s[__i++]);
     do if (__s[--__i] == (char)__c) return ((char *)__s) + __i;
     while (__i);
+    return 0;
+}
+
+static inline char *strstr(char const *__s1, char const *__s2) {
+    char const *__p1 = __s1;
+    while (*__s1) {
+        char const *__p2 = __s2;
+        while (*__p2 && (*__p1 == *__p2)) ++__p1, ++__p2;
+        if (!*__p2) return (char *)__s1;
+        ++__s1;
+        __p1 = __s1;
+    }
     return 0;
 }
 
@@ -129,7 +141,6 @@ static inline char *strrchr(const char *__s, int __c) {
 strxfrm
 strpbrk
 strspn
-strstr
 strtok
 strerror
 */
