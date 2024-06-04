@@ -82,4 +82,42 @@ static inline void *memset(void *__s, int __c, size_t __n) {
     return __s;
 }
 
+static inline char *strcpy(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2) {
+    char *__ret = __s1;
+    while ((*__s1++ = *__s2++));
+    return __ret;
+}
+
+static inline char *strncpy(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2, size_t __n) {
+    char *__ret = __s1;
+    while (__n && (*__s1++ = *__s2++)) --__n;
+    while (__n-- > 1) *__s1++ = '\0';
+    return __ret;
+}
+
+static inline char *strcat(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2) {
+    char *__ret = __s1;
+    if (*__s1) while (*++__s1);
+    while ((*__s1++ = *__s2++));
+    return __ret;
+}
+
+static inline char *strncat(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2, size_t __n) {
+    char *__ret = __s1;
+    while (*__s1) ++__s1;
+    while (__n && (*__s1++ = *__s2++)) --__n;
+    if (!__n) *__s1 = '\0';
+    return __ret;
+}
+
+/*
+
+strxfrm
+strchr
+strpbrk
+strspn
+strstr
+strtok
+strerror
+*/
 __WALIBC_END_EXTERN;
