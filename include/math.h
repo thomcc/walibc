@@ -3,7 +3,7 @@
 __WALIBC_BEGIN_EXTERN;
 
 // These are defined in compiler-builtins, which (hopefully?) we can rely on and
-// use. This list is taken from
+// use (that is: we should ultimately be linked against it). This list is from
 // https://github.com/rust-lang/compiler-builtins/blob/c04eb9e1a/src/math.rs
 
 extern double acos(double);
