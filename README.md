@@ -8,9 +8,9 @@ The goal of this library is to allow Rust code that targets `wasm32-unknown-unkn
 
 This wouldn't be seamless (the C library bundler would have to add a build dep on `walibc`), but it would allow things like (for example) libsqlite3-sys to avoid the need to carry it's own implementation of libc functions.
 
-Currently, it's essentially a header-only subset-of-libc. There aren't an abundance of good reasons for this, but the basic one is it lets us avoid linker issues if two distinct copies of `walibc` are used in a single build with no coordination. A better solution here is leverage cargo to solve this problem for ourselves. That said, this way we avoid colliding with functions provided by compiler_builtins...
+Currently, it's essentially a nearly-header-only subset-of-libc; almost everything is defined as `static inline`. There aren't an abundance of good reasons for it being header only, but the basic one is it lets us avoid linker issues if two distinct copies of `walibc` are used in a single build with no coordination. There are a few other workflow-related reasons too -- this better avoids symbol collisions in some cases.
 
-That said, making most functions inline goes part of the way towards addressing how naïve many of our function implementations are.
+And not for nothing, making most functions inline goes part of the way towards addressing how naïve many of our function implementations are.
 
 ## Non-goals
 - Supporting non-Clang compilers.
