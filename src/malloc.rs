@@ -15,16 +15,18 @@ use std::alloc;
 // `clang -dM -E -target wasm32-unknown-unknown`
 const DEFAULT_ALIGN: usize = 16;
 
+// Note: The extra fields only cost anything on wasm64, on wasm32 they'd be
+// padding -- all our allocations are aligned to 16, and `layout` is 8 bytes on
+// 32bit targets.
 #[derive(Copy, Clone)]
 struct AllocHeader {
     // Layout to pass to free
     layout: Layout,
     // Pointer to free. TODO: shouldn't be necessary.
     ptr: *mut u8,
-    // Actual size available, for realloc. TODO: shouldn't be necessary.
+    // Actual size available, for realloc (and now for malloc_usable_size too).
+    // TODO: shouldn't be necessary (for either case).
     usable_size: usize,
-    // (The extra fields only cost anything on wasm64, on wasm32 they'd be
-    // padding otherwise since all our allocations are aligned to 16)
 }
 
 // shared code between malloc and calloc
@@ -60,6 +62,8 @@ unsafe fn do_alloc(
     let info_ptr = result_ptr
         .sub(size_of::<AllocHeader>())
         .cast::<AllocHeader>();
+    // This actually should be aligned in almost every case, but it's hard to
+    // guarantee and unaligned read/write is very cheap anyway.
     info_ptr.write_unaligned(AllocHeader {
         layout: to_request,
         ptr: orig_ptr,
