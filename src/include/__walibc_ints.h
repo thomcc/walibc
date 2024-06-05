@@ -130,6 +130,7 @@ typedef ptrdiff_t ssize_t;
 # error "what?"
 #endif
 
+// stdbool.h
 #ifndef __bool_true_false_are_defined
 # ifndef __cplusplus
 #  ifndef bool

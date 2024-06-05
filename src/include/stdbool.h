@@ -1,13 +1,5 @@
 #pragma once
-#include <__walibc.h>
+#include <__walibc_ints.h>
 __WALIBC_BEGIN_EXTERN;
-
-#ifndef __cplusplus
-# define bool _Bool
-# define true 1
-# define false 0
-#endif
-
-#define __bool_true_false_are_defined 1
-
+// Defines are present in __walibc_ints.h
 __WALIBC_END_EXTERN;
