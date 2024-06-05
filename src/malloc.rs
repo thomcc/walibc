@@ -1,15 +1,15 @@
-//! Implementation of `malloc`-family functions. These don't have the correct
-//! name (they're prefixed with `__walibc_`), but are wrapped by inline
-//! functions in our `stdlib.h`, which simplifies some aspects of development
-//! (this is easier to test, since things dislike it when we override the global
-//! malloc/free in this manner).
-
+//! Implementation of `malloc`-family functions (forwards to Rust global
+//! allocator). These don't have the correct name (they're prefixed with
+//! `__walibc_`), but are wrapped by inline functions in our `stdlib.h`, which
+//! simplifies some aspects of development (this is easier to test, since things
+//! dislike it when we override the global malloc/free in this manner).
 use core::{
     alloc::Layout,
     ffi::{c_int, c_void},
     mem::size_of,
     ptr::null_mut,
 };
+
 use std::alloc;
 // Matches `__BIGGEST_ALIGNMENT__` in output of
 // `clang -dM -E -target wasm32-unknown-unknown`

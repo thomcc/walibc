@@ -1,8 +1,9 @@
 #pragma once
 #include <__walibc.h>
 __WALIBC_BEGIN_EXTERN;
-/* Based on a trick from luajit. */
-static const unsigned char __walibc_char_masks[258] = {
+// Based on a trick from luajit. TODO: remove this and use more straightforward
+// implementations. This is cute, but dubious.
+static const unsigned char __walibc_char_masks[257] = {
     0, /* to handle EOF */
     1,   1,   1,   1,   1,   1,   1,   1,   1,   3,   3,   3,   3,   3,   1,   1,
     1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,
@@ -20,7 +21,6 @@ static const unsigned char __walibc_char_masks[258] = {
     128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128,
     128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128,
     128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128, 128,
-    0, /* so we can be put in SHF_STRINGS and potentially deduped (does this work?) */
 };
 
 static inline int iscntrl(int __c) { return !!(__walibc_char_masks[__c+1] & 0x01); }
