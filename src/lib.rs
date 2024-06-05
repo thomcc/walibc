@@ -1,4 +1,5 @@
-//! This library is only intended to be used as a build-dependency, so the
-//! actual lib export is intentionally empty.
-//!
-//! TODO: document usage.
+//! Note: The definitions provided by the `walibc` Rust crate are intended to be
+//! used only by the `walibc`` C code. They are public to ensure they aren't
+//! removed despite not being used.
+// Note: intentionally not `#![no_std]`
+pub mod malloc;

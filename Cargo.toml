@@ -4,5 +4,6 @@ version = "0.0.1"
 edition = "2021"
 description = "A peculiar libc"
 license = "Unlicense OR MIT OR Apache-2.0"
+links = "walibc"
 
 [dependencies]
