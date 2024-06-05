@@ -228,8 +228,17 @@ static inline size_t strcspn(char const *__s1, char const *__s2) {
     return __n;
 }
 
+static inline char *strpbrk(char const *__s1, char const *__s2) {
+    while (*__s1) {
+        for (char const *__p2 = __s2; *__p2;)
+            if (*__s1 == *__p2++) return (char*)__s1;
+        ++__s1;
+    }
+    return 0;
+}
+
 /*
-strpbrk
-strerror
+TODO:
+- strerror
 */
 __WALIBC_END_EXTERN;
