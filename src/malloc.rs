@@ -36,7 +36,7 @@ unsafe fn do_alloc(
     // Ensure no zero-sized alloc.
     let sz = sz.max(1);
     let align = align.max(DEFAULT_ALIGN);
-    // Compute a layout sufficient to store `AllocInfo`
+    // Compute a layout sufficient to store `AllocHeader`
     // immediately before it.
     let header_layout = Layout::new::<AllocHeader>();
     let Ok(requested_layout) = Layout::from_size_align(sz, align) else {
