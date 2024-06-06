@@ -1,4 +1,7 @@
 #include <errno.h>
+#include <__walibc.h>
+
+__WALIBC_BEGIN_EXTERN;
 
 static char const *const error_messages[116] = {
     [0] = 0,
@@ -127,3 +130,5 @@ char const *__walibc_strerror(int errc) {
     }
     return error_messages[errc];
 }
+
+__WALIBC_END_EXTERN;
