@@ -146,15 +146,6 @@ static inline size_t strxfrm(char * __WALIBC_RESTRICT __s1, char const *__WALIBC
     return __len;
 }
 
-static inline char *strpbrk(char const *__s1, char const *__s2) {
-    while (*__s1) {
-        for (char const *__p2 = __s2; *__p2;)
-            if (*__s1 == *__p2++) return (char*)__s1;
-        ++__s1;
-    }
-    return 0;
-}
-
 static inline int strcasecmp(char const *__s1, char const *__s2) {
     while (*__s1 && (*__s1 == *__s2 || tolower(*__s1) == tolower(*__s2))) ++__s1, ++__s2;
     return tolower(*__s1) - tolower(*__s2);
@@ -284,6 +275,12 @@ static inline char *strtok_r(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_
 	if (**__p) *(*__p)++ = 0;
 	else *__p = 0;
 	return __s1;
+}
+
+static inline char *strpbrk(char const *__s1, char const *__s2) {
+	char const *__p = strcspn(__s1, __s2) + __s1;
+    if (*__p) return (char*)__p;
+    return 0;
 }
 
 /*
