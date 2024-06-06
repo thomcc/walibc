@@ -3,9 +3,9 @@
 #include <stdlib.h>
 __WALIBC_BEGIN_EXTERN;
 
-// Support the environment in so far as if you do (say) a `setenv` and then a
-// `getenv` of the same variable, the `getenv` will see the value set by the
-// `setenv`.
+// Support the environment enough so that if you do a `setenv` and then a
+// `getenv` of the same variable (say), the `getenv` will see the value set by
+// the `setenv`.
 //
 // This code was mostly taken from musl.
 
