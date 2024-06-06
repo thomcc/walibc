@@ -3,6 +3,7 @@
 #include <__walibc_ints.h>
 #include <malloc.h>
 #include <ctype.h>
+#include <errno.h>
 __WALIBC_BEGIN_EXTERN;
 
 static inline int strcmp(char const *__s1, char const *__s2) {
@@ -288,9 +289,28 @@ static inline char *strndup(char const *__s, size_t __n) {
     return __p;
 }
 
+static inline char const *strerror(int __e) {
+    extern char const *__walibc_strerror(int);
+    return __walibc_strerror(__e);
+}
+
+static inline int strerror_r(int __e, char *__o, size_t __n) {
+	char const *__s = strerror(__e);
+	size_t __l = strlen(__s);
+	if (__l >= __n) {
+		if (__n) {
+            __o[__n - 1] = 0;
+            memcpy(__o, __s, __n - 1);
+        }
+		return ERANGE;
+	}
+	memcpy(__o, __s, __l + 1);
+	return 0;
+}
+
 /*
 TODO:
-- strerror
-- common non-standard apis?
+- more common non-standard apis?
+- more of the `_s` APIs?
 */
 __WALIBC_END_EXTERN;
