@@ -277,6 +277,17 @@ static inline char *strtok_r(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_
 	return __s1;
 }
 
+// based on musl
+static inline char *strsep(char **__ptr, const char *__sep) {
+	char *__s = *__ptr, *__e;
+	if (!__s) return 0;
+	__e = __s + strcspn(__s, __sep);
+	if (*__e) *__e++ = 0;
+	else __e = 0;
+	*__ptr = __e;
+	return __s;
+}
+
 static inline char *strpbrk(char const *__s1, char const *__s2) {
 	char const *__p = strcspn(__s1, __s2) + __s1;
     if (*__p) return (char*)__p;
