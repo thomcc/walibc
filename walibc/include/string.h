@@ -46,11 +46,12 @@ static inline char *strrchr(char const *s, int c) {
 }
 
 static inline void *memchr(void const *__s, int __c, size_t __n) {
-    unsigned char const *__p = (unsigned char const*)__s;
+    uint8_t const *__p = (uint8_t const*)__s;
     while (__n--) {
-        if (*__p == (unsigned char)__c) return (void *)__p;
+        if (*__p == (uint8_t)__c) return (void *)__p;
         ++__p;
     }
+    return 0;
 }
 
 static inline void *memrchr(void const *__s, int __c, size_t __n) {
