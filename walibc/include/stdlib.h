@@ -55,4 +55,22 @@ static inline int clearenv(void) {
     return __walibc_clearenv();
 }
 
+typedef struct { int quot, rem } div_t;
+static inline div_t div(int __n, int __d) {
+    div_t __r = {__n / __d, __n % __d};
+    return __r;
+}
+
+typedef struct { long quot, rem } ldiv_t;
+static inline ldiv_t ldiv(long __n, long __d) {
+    ldiv_t __r = {__n / __d, __n % __d};
+    return __r;
+}
+
+typedef struct { long long quot, rem } lldiv_t;
+static inline lldiv_t lldiv(long long __n, long long __d) {
+    lldiv_t __r = {__n / __d, __n % __d};
+    return __r;
+}
+
 __WALIBC_END_EXTERN;
