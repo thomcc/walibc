@@ -85,5 +85,9 @@ static inline long long llabs(long long a) {
 	return a < 0 ? -a : a;
 }
 
+static inline intmax_t imaxabs(intmax_t a) {
+	return a < 0 ? -a : a;
+}
+
 
 __WALIBC_END_EXTERN;
