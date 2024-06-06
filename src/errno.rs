@@ -8,3 +8,15 @@ pub unsafe extern "C" fn __walibc_errno() -> *mut c_int {
     }
     ERRNO.with(|v| v.get())
 }
+
+pub(crate) fn set_errno(errc: c_int) {
+    unsafe { __walibc_errno().write(errc) };
+}
+
+// pub(crate) fn get_errno() -> c_int {
+//     unsafe { __walibc_errno().read() }
+// }
+
+// Populate this list with definitions that match our `errno.h` as needed.
+pub(crate) const ENOMEM: c_int = 12;
+pub(crate) const EINVAL: c_int = 22;

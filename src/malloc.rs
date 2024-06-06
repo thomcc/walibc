@@ -38,20 +38,27 @@ unsafe fn do_alloc(
     // Ensure no zero-sized alloc.
     let sz = sz.max(1);
     let align = align.max(DEFAULT_ALIGN);
+    if !align.is_power_of_two() {
+        crate::errno::set_errno(crate::errno::EINVAL);
+        return null_mut();
+    }
     // Compute a layout sufficient to store `AllocHeader`
     // immediately before it.
     let header_layout = Layout::new::<AllocHeader>();
     let Ok(requested_layout) = Layout::from_size_align(sz, align) else {
+        crate::errno::set_errno(crate::errno::ENOMEM);
         return null_mut();
     };
     let requested_layout = requested_layout.pad_to_align(); // Hmm...
     let Ok((to_request, offset)) = header_layout.extend(requested_layout) else {
+        crate::errno::set_errno(crate::errno::ENOMEM);
         return null_mut();
     };
     let to_request = to_request.pad_to_align(); // Hmm...
 
     let orig_ptr = allocator(to_request);
     if orig_ptr.is_null() {
+        crate::errno::set_errno(crate::errno::ENOMEM);
         return null_mut();
     }
 
@@ -80,6 +87,7 @@ pub unsafe extern "C" fn __walibc_malloc(sz: usize) -> *mut c_void {
 #[no_mangle]
 pub unsafe extern "C" fn __walibc_calloc(cnt: usize, sz: usize) -> *mut c_void {
     let Some(total) = sz.checked_mul(cnt) else {
+        crate::errno::set_errno(crate::errno::ENOMEM);
         return null_mut();
     };
     do_alloc(total, DEFAULT_ALIGN, alloc::alloc_zeroed)
@@ -102,6 +110,7 @@ pub unsafe extern "C" fn __walibc_realloc(ptr: *mut c_void, new_size: usize) -> 
     //  `realloc(ptr, 0)` is the same as `free` (common extension).
     if new_size == 0 {
         __walibc_free(ptr);
+        // Note: Not an error.
         return core::ptr::null_mut();
     }
     // `realloc(NULL, sz)` is the same as `malloc(sz)`.
@@ -126,6 +135,7 @@ pub unsafe extern "C" fn __walibc_realloc(ptr: *mut c_void, new_size: usize) -> 
         alloc::alloc,
     );
     if new.is_null() {
+        // Note: `errno` already got set by `do_alloc` (hopefully).
         return null_mut();
     }
     new.cast::<u8>()
@@ -162,6 +172,7 @@ pub unsafe extern "C" fn __walibc_aligned_alloc(align: usize, sz: usize) -> *mut
 #[no_mangle]
 pub unsafe extern "C" fn __walibc_malloc_usable_size(p: *mut c_void) -> usize {
     if p.is_null() {
+        // Note: Not an error.
         return 0;
     }
     let info_ptr = p.sub(size_of::<AllocHeader>()).cast::<AllocHeader>();
