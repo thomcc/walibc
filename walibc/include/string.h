@@ -16,15 +16,6 @@ static inline int strcoll(char const *__s1, char const *__s2) {
     return strcmp(__s1, __s2);
 }
 
-static inline size_t strcspn(char const *__s1, char const *__s2) {
-    size_t __i;
-    for (__i = 0; __s1[__i]; ++__i) {
-        for (char const *__p = __s2; *__p;)
-            if (__s1[__i] == *__p++) return __i;
-    }
-    return __i;
-}
-
 static inline size_t strlen(char const *__s) {
     size_t __l = 0;
     while (__s[__l]) ++__l;
