@@ -22,4 +22,4 @@ MIT. While most of `walibc` was written fresh, portions are taken from other pla
 
 - Portions of `walibc` were ported from [pdclib](https://github.com/DevSolar/pdclib), which is public domain.
 - The implementation of the `vsnprintf`-family of functions is taken from [`stb_sprintf`](https://github.com/nothings/stb/blob/013ac3beddff3dbffafd5177e7972067cd2b5083/stb_sprintf.h) (with some modifications), which is public also domain.
-- Portions of `walibc` are based on code from [musl](https://musl.libc.org/), which is also MIT licensed (and whose copyright notice appears in our MIT license text).
+- Portions of `walibc` are based on code from [musl](https://musl.libc.org/), which is also [MIT licensed](https://git.musl-libc.org/cgit/musl/tree/COPYRIGHT?h=v1.2.5).
