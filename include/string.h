@@ -1,6 +1,7 @@
 #pragma once
 #include <__walibc.h>
 #include <__walibc_ints.h>
+#include <ctype.h>
 __WALIBC_BEGIN_EXTERN;
 
 static inline int strcmp(char const *__s1, char const *__s2) {
@@ -235,6 +236,18 @@ static inline char *strpbrk(char const *__s1, char const *__s2) {
         ++__s1;
     }
     return 0;
+}
+
+static inline int strcasecmp(char const *__s1, char const *__s2) {
+    while (*__s1 && (*__s1 == *__s2 || tolower(*__s1) == tolower(*__s2))) ++__s1, ++__s2;
+    return tolower(*__s1) - tolower(*__s2);
+}
+
+static inline int strncasecmp(char const *__s1, char const *__s2, size_t __n) {
+    while (__n && *__s1 && (*__s1 == *__s2 || tolower(*__s1) == tolower(*__s2)))
+        ++__s1, ++__s2, --__n;
+    if (__n == 0) return 0;
+    return tolower(*__s1) - tolower(*__s2);
 }
 
 /*
