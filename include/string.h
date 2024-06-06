@@ -256,6 +256,18 @@ static inline char *strcasestr(char const *__s1, char const *__s2) {
 	return 0;
 }
 
+static inline size_t strlcpy(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2, size_t __n) {
+    char *__start = __s1;
+	while (__n && (*__s1 = *__s2)) --__n, ++__s2, ++__s1;
+	*__s1 = 0;
+	return (__s1 - __start) + strlen(__s2);
+}
+
+static inline size_t strlcat(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2, size_t __n) {
+	size_t __len = strnlen(__s1, __n);
+	if (__len == __n) return __len + strlen(__s2);
+	return __len + strlcpy(__s1 + __len, __s2, __n - __len);
+}
 /*
 TODO:
 - strerror
