@@ -205,32 +205,6 @@ static inline size_t strxfrm(char * __WALIBC_RESTRICT __s1, char const *__WALIBC
     return __len;
 }
 
-static inline size_t strspn(char const *__s1, char const *__s2) {
-    // TODO bitset
-    size_t __n = 0;
-    while (__s1[__n]) {
-        char const *__p = __s2;
-        while (*__p) {
-            if (__s1[__n] == *__p) break;
-            ++__p;
-        }
-        if (!*__p) return __n;
-        ++__n;
-    }
-    return __n;
-}
-
-static inline size_t strcspn(char const *__s1, char const *__s2) {
-    // TODO bitset
-    size_t __n = 0;
-    while (__s1[__n]) {
-        for (char const *__p = __s2; *__p;)
-            if (__s1[__n] == *__p++) return __n;
-        ++__n;
-    }
-    return __n;
-}
-
 static inline char *strpbrk(char const *__s1, char const *__s2) {
     while (*__s1) {
         for (char const *__p2 = __s2; *__p2;)
@@ -314,6 +288,39 @@ static inline char *strchrnul(char const *__s, int __c) {
 	for (; *__s && *(uint8_t *)__s != __b; ++__s);
 	return (char *)__s;
 }
+
+#define __WALIBC_BITOP(a,b,op) \
+    ((a)[(size_t)(b)/(8*sizeof *(a))] op (size_t)1<<((size_t)(b)%(8*sizeof *(a))))
+
+// Based on musl
+static inline size_t strspn(char const *__s1, char const *__s2) {
+    char const *__p = __s1;
+	size_t __set[32 / sizeof(size_t)] = {0};
+
+	if (!__s2[0]) return 0;
+	if (!__s2[1]) {
+		for (; *__s1 == *__s2; ++__s1);
+		return __s1 - __p;
+	}
+
+	for (; *__s2 && __WALIBC_BITOP(__set, *(uint8_t*)__s2, |=); ++__s2);
+	for (; *__s1 && __WALIBC_BITOP(__set, *(uint8_t*)__s1, &); ++__s1);
+	return __s1 - __p;
+}
+
+// Based on musl
+static inline size_t strcspn(char const *__s1, char const *__s2) {
+	char const *__p = __s1;
+	size_t __set[32 / sizeof(size_t)] = {0};
+
+	if (!__s2[0] || !__s2[1]) return strchrnul(__s1, *__s2) - __p;
+
+	for (; *__s2 && __WALIBC_BITOP(__set, *(uint8_t*)__s2, |=); ++__s2);
+	for (; *__s1 && !__WALIBC_BITOP(__set, *(uint8_t*)__s1, &); ++__s1);
+	return __s1-__p;
+}
+
+#undef __WALIBC_BITOP
 
 /*
 TODO:
