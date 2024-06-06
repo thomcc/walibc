@@ -112,14 +112,14 @@ typedef int errno_t;
 #define ENOTRECOVERABLE 104
 #define EOWNERDEAD 105
 #define EQFULL 106
-#define EBADFD 107 /* File descriptor in bad state */
-#define EREMOTEIO 108 /* Remote I/O error */
-#define ENOMEDIUM 109 /* No medium found */
-#define EMEDIUMTYPE 110 /* Wrong medium type */
-#define ENOKEY 111 /* Required key not available */
-#define EKEYEXPIRED 112 /* Key has expired */
-#define EKEYREVOKED 113 /* Key has been revoked */
-#define EKEYREJECTED 114 /* Key was rejected by service */
+#define EBADFD 107
+#define EREMOTEIO 108
+#define ENOMEDIUM 109
+#define EMEDIUMTYPE 110
+#define ENOKEY 111
+#define EKEYEXPIRED 112
+#define EKEYREVOKED 113
+#define EKEYREJECTED 114
 
 #define EWOULDBLOCK EAGAIN
 
