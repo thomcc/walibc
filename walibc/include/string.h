@@ -53,6 +53,12 @@ static inline void *memchr(void const *__s, int __c, size_t __n) {
     }
 }
 
+static inline void *memrchr(void const *__s, int __c, size_t __n) {
+    uint8_t const *__p = (uint8_t const*)__s;
+    while (__n--) if (__p[__n] == (uint8_t)__c) return (void *)&__p[__n];
+    return 0;
+}
+
 static inline int memcmp(void const *__s1, void const *__s2, size_t __n) {
     unsigned char const *__p1 = (unsigned char const *)__s1, *__p2 = (unsigned char const *)__s2;
     while (__n--) {
