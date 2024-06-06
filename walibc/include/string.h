@@ -292,6 +292,18 @@ static inline char *strpbrk(char const *__s1, char const *__s2) {
     return 0;
 }
 
+static inline void bzero(void *__s, size_t __n) {
+	memset(__s, 0, __n);
+}
+
+static inline void bcopy(void const *__s1, void *__s2, size_t __n) {
+	memmove(__s2, __s1, __n);
+}
+
+static inline int bcmp(void const *__s1, void const *__s2, size_t __n) {
+	return memcmp(__s1, __s2, __n);
+}
+
 /*
 TODO:
 - more common non-standard apis?
