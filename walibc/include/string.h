@@ -304,6 +304,12 @@ static inline int bcmp(void const *__s1, void const *__s2, size_t __n) {
 	return memcmp(__s1, __s2, __n);
 }
 
+static inline void *explicit_bzero(void *__s, size_t __n) {
+    uint8_t volatile *__p = (uint8_t volatile *)__s;
+    while (__n--) *__p++ = 0;
+    return __s;
+}
+
 /*
 TODO:
 - more common non-standard apis?
