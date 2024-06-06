@@ -250,8 +250,15 @@ static inline int strncasecmp(char const *__s1, char const *__s2, size_t __n) {
     return tolower(*__s1) - tolower(*__s2);
 }
 
+static inline char *strcasestr(char const *__s1, char const *__s2) {
+	for (size_t l = strlen(__s2); *__s1; ++__s1)
+        if (!strncasecmp(__s1, __s2, l)) return (char *)__s1;
+	return 0;
+}
+
 /*
 TODO:
 - strerror
+- common non-standard apis?
 */
 __WALIBC_END_EXTERN;
