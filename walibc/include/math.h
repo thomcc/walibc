@@ -1,5 +1,6 @@
 #pragma once
 #include <__walibc.h>
+#include <__walibc_ints.h>
 __WALIBC_BEGIN_EXTERN;
 
 // These are defined in compiler-builtins, which (hopefully?) we can rely on and
