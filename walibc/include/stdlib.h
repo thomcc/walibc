@@ -73,6 +73,13 @@ static inline lldiv_t lldiv(long long __n, long long __d) {
     return __r;
 }
 
+typedef struct { intmax_t quot, rem } imaxdiv_t;
+static inline imaxdiv_t imaxdiv(intmax_t __n, intmax_t __d) {
+    imaxdiv_t __r = {__n / __d, __n % __d};
+    return __r;
+}
+
+
 static inline int abs(int a) {
 	return a < 0 ? -a : a;
 }
