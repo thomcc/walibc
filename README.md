@@ -18,8 +18,8 @@ And not for nothing, making most functions inline goes part of the way towards a
 - Supporting non-Rust use, for now.
 
 ## License
-Public domain, as explained by [the Unlicense](./UNLICENSE). Failing that, the typical Rusty combo of [Apache-2.0](./LICENSE-APACHE) or [MIT](./LICENSE-MIT) is available.
+MIT. While most of `walibc` was written fresh, portions are taken from other places, all of which are either public domain, or MIT licensed themselves:
 
-Additionally:
-- Portions of `walibc` were ported from [pdclib](https://github.com/DevSolar/pdclib), which is also public domain.
-- The implementation of the `vsnprintf`-family of functions is taken from [`stb_sprintf`](https://github.com/nothings/stb/blob/013ac3beddff3dbffafd5177e7972067cd2b5083/stb_sprintf.h) (with some modifications). This is also public domain.
+- Portions of `walibc` were ported from [pdclib](https://github.com/DevSolar/pdclib), which is public domain.
+- The implementation of the `vsnprintf`-family of functions is taken from [`stb_sprintf`](https://github.com/nothings/stb/blob/013ac3beddff3dbffafd5177e7972067cd2b5083/stb_sprintf.h) (with some modifications), which is public also domain.
+- Portions of `walibc` are based on code from [musl](https://musl.libc.org/), which is also MIT licensed (and whose copyright notice appears in our MIT license text).
