@@ -139,65 +139,6 @@ static inline char *strstr(char const *__s1, char const *__s2) {
     return 0;
 }
 
-static inline char *strtok_s(
-    char *__WALIBC_RESTRICT __s1,
-    rsize_t *__WALIBC_RESTRICT __s1max,
-    char const *__WALIBC_RESTRICT __s2,
-    char **__WALIBC_RESTRICT __ptr
-) {
-    char const *__p = __s2;
-    if (!__s1max || !__s2 || !__ptr || (!__s1 && !*__ptr) || *__s1max > RSIZE_MAX)
-        return 0; // EINVAL
-
-    if (__s1) *__ptr = __s1;
-    else {
-        if (!*__ptr) return 0;
-        __s1 = *__ptr;
-    }
-
-    while (*__p && *__s1) {
-        if (*__s1 == *__p) {
-            if (*__s1max == 0) return 0; // EINVAL
-            ++__s1;
-            --*__s1max;
-            __p = __s2;
-            continue;
-        }
-
-        ++__p;
-    }
-
-    if (!*__s1) {
-        *__ptr = __s1;
-        return 0;
-    }
-
-    *__ptr = __s1;
-
-    while (**__ptr) {
-        __p = __s2;
-        while (*__p) {
-            if (**__ptr == *__p++) {
-                if (*__s1max == 0) return 0; // EINVAL
-                --*__s1max;
-                *((*__ptr)++) = '\0';
-                return __s1;
-            }
-        }
-
-        if (*__s1max == 0) return 0; // EINVAL
-        --*__s1max;
-        ++*__ptr;
-    }
-    return __s1;
-}
-
-static inline char *strtok(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2) {
-    static struct { char *__tmp; rsize_t __max; } __state = {0};
-    if (__s1) __state.__tmp = __s1, __state.__max = strlen(__s1);
-    return strtok_s(__s1, &__state.__max, __s2, &__state.__tmp);
-}
-
 static inline size_t strxfrm(char * __WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2, size_t __n) {
     // basically just strncpy without zeroing the tail.
     size_t __len = strlen(__s2);
@@ -321,6 +262,29 @@ static inline size_t strcspn(char const *__s1, char const *__s2) {
 }
 
 #undef __WALIBC_BITOP
+
+// based on musl
+static inline char *strtok(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2) {
+	static char *__p = 0;
+	if (!__s1 && !(__s1 = __p)) return NULL;
+	__s1 += strspn(__s1, __s2);
+	if (!*__s1) return __p = 0;
+	__p = __s1 + strcspn(__s1, __s2);
+	if (*__p) *__p++ = 0;
+	else __p = 0;
+	return __s1;
+}
+
+// based on musl
+static inline char *strtok_r(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2, char **__WALIBC_RESTRICT __p) {
+	if (!__s1 && !(__s1 = *__p)) return NULL;
+	__s1 += strspn(__s1, __s2);
+	if (!*__s1) return *__p = 0;
+	*__p = __s1 + strcspn(__s1, __s2);
+	if (**__p) *(*__p)++ = 0;
+	else *__p = 0;
+	return __s1;
+}
 
 /*
 TODO:
