@@ -308,7 +308,7 @@ static inline int strerror_r(int __e, char *__o, size_t __n) {
 	return 0;
 }
 
-static inline char *strchrnul(const char *__s, int __c) {
+static inline char *strchrnul(char const *__s, int __c) {
 	uint8_t __b = (uint8_t)__c;
 	if (!__b) return (char *)__s + strlen(__s);
 	for (; *__s && *(uint8_t *)__s != __b; ++__s);
