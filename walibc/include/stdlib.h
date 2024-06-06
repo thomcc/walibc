@@ -73,4 +73,17 @@ static inline lldiv_t lldiv(long long __n, long long __d) {
     return __r;
 }
 
+static inline int abs(int a) {
+	return a < 0 ? -a : a;
+}
+
+static inline long labs(long a) {
+	return a < 0 ? -a : a;
+}
+
+static inline long long llabs(long long a) {
+	return a < 0 ? -a : a;
+}
+
+
 __WALIBC_END_EXTERN;
