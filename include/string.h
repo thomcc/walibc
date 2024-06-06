@@ -1,6 +1,7 @@
 #pragma once
 #include <__walibc.h>
 #include <__walibc_ints.h>
+#include <malloc.h>
 #include <ctype.h>
 __WALIBC_BEGIN_EXTERN;
 
@@ -268,6 +269,25 @@ static inline size_t strlcat(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_
 	if (__len == __n) return __len + strlen(__s2);
 	return __len + strlcpy(__s1 + __len, __s2, __n - __len);
 }
+
+static inline char *strdup(char const *__s) {
+    size_t __len = strlen(__s);
+    char *__p = (char*)malloc(__len + 1);
+    if (!__p) return 0;
+    memcpy(__p, __s, __len);
+    __p[__len] = '\0';
+    return __p;
+}
+
+static inline char *strndup(char const *__s, size_t __n) {
+    size_t __len = strnlen(__s, __n);
+    char *__p = (char*)malloc(__len + 1);
+    if (!__p) return 0;
+    memcpy(__p, __s, __len);
+    __p[__len] = '\0';
+    return __p;
+}
+
 /*
 TODO:
 - strerror
