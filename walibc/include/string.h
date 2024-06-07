@@ -310,6 +310,18 @@ static inline void *explicit_bzero(void *__s, size_t __n) {
     return __s;
 }
 
+static inline char *stpcpy(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2) {
+    while ((*__s1 = *__s2)) ++__s1, ++__s2;
+    return __s1;
+}
+
+static inline char *stpncpy(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_RESTRICT __s2, size_t __n) {
+    while (__n && (*__s1 = *__s2)) --__n, ++__s1, ++__s2;
+	memset(__s1, 0, __n);
+    return __s1;
+}
+
+
 /*
 TODO:
 - more common non-standard apis?
