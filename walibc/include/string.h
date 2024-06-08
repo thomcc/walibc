@@ -321,6 +321,17 @@ static inline char *stpncpy(char *__WALIBC_RESTRICT __s1, char const *__WALIBC_R
     return __s1;
 }
 
+static inline int stricmp(char const *__s1, char const *__s2) {
+    return strcasecmp(__s1, __s2);
+}
+
+static inline int strnicmp(char const *__s1, char const *__s2, size_t __n) {
+    return strncasecmp(__s1, __s2, __n);
+}
+
+static inline int stristr(char const *__s1, char const *__s2) {
+    return strcasestr(__s1, __s2);
+}
 
 /*
 TODO:
