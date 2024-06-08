@@ -96,5 +96,22 @@ static inline intmax_t imaxabs(intmax_t a) {
 	return a < 0 ? -a : a;
 }
 
+static inline void qsort(
+    void *__base, size_t __len, size_t __esz,
+    int (*__cmp)(void const *, void const *)
+) {
+    extern void __walibc_qsort(void *, size_t, size_t, int (*)(void const *, void const *));
+    __walibc_qsort(__base, __len, __esz, __cmp);
+}
+
+static inline void qsort_r(
+    void *__base, size_t __len, size_t __esz,
+    int (*__cmp)(void const *, void const *, void *),
+    void *__this
+) {
+    extern void __walibc_qsort_r(void *, size_t, size_t, int (*)(void const *, void const *, void *), void *);
+    __walibc_qsort_r(__base, __len, __esz, __cmp, __this);
+}
+
 
 __WALIBC_END_EXTERN;
