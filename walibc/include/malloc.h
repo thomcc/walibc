@@ -3,6 +3,10 @@
 #include <__walibc_ints.h>
 __WALIBC_BEGIN_EXTERN;
 
+#ifndef alloca
+# define alloca(sz) __builtin_alloca(sz)
+#endif
+
 static inline void *malloc(size_t __size) {
     extern void *__walibc_malloc(size_t);
     return __walibc_malloc(__size);
