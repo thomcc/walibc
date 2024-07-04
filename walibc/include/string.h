@@ -28,10 +28,10 @@ static inline int strncmp(char const *__s1, char const *__s2, size_t __n) {
     return *(unsigned char *)__s1 - *(unsigned char *)__s2;
 }
 
-static inline char *strrchr(char const *s, int c) {
+static inline char *strrchr(char const *__s, int __c) {
     size_t __i = 0;
-    while (s[__i++]);
-    do if (s[--__i] == (char)c) return (char*)(s + __i);
+    while (__s[__i++]);
+    do if (__s[--__i] == (char)__c) return (char*)(__s + __i);
     while (__i);
     return NULL;
 }
